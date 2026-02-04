@@ -1,1 +1,4 @@
-<Solution />
+<Solution>
+  <Project Path="Fitness.BL/Fitness.BL.csproj" />
+  <Project Path="Fitness.CMD/Fitness.CMD.csproj" />
+</Solution>
