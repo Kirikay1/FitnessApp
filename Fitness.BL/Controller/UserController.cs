@@ -13,6 +13,8 @@ namespace Fitness.BL.Controller
 
         public User CurrentUser { get; }
 
+        public bool IsNewUser { get; } = false;
+
         /// <summary>
         /// Пользователь приложения.
         /// </summary>
@@ -36,13 +38,12 @@ namespace Fitness.BL.Controller
             {
                 CurrentUser = new User(userName);
                 Users.Add(CurrentUser);
+                IsNewUser = true;
                 Save();
             }
 
 
         }
-
-
 
         /// <summary>
         /// Получить сохраненный список пользователей.
@@ -57,6 +58,15 @@ namespace Fitness.BL.Controller
 
             return JsonSerializer.Deserialize<List<User>>(fs) ?? new List<User>();
 
+        }
+
+        public void SetNewUserData(string genderName, DateTime bitrhDate, double weigth = 1, double height = 1)
+        {
+            CurrentUser.Gender = new Gender(genderName);
+            CurrentUser.BirthDate = bitrhDate;
+            CurrentUser.Weigth = weigth;
+            CurrentUser.Heigth = height;
+            Save();
         }
 
         /// <summary>

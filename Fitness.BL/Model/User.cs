@@ -18,12 +18,12 @@ namespace Fitness.BL.Model
         /// <summary>
         /// Пол.
         /// </summary>
-        public Gender Gender { get; }
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// Дата рождения.
         /// </summary>
-        public DateTime BirthDate { get; }
+        public DateTime BirthDate { get; set; }
 
         /// <summary>
         /// Вес.
@@ -35,8 +35,8 @@ namespace Fitness.BL.Model
         /// </summary>
         public double Heigth { get; set; }
 
-        public int Age 
-        {            
+        public int Age
+        {
             get
             {
                 var today = DateTime.Today;

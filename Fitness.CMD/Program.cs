@@ -5,19 +5,36 @@ Console.WriteLine("Вас приветствует приложение FitnessA
 Console.WriteLine("Введите имя пользователя");
 var name = Console.ReadLine();
 
-//Console.WriteLine("Введите пол");
-//var gender = Console.ReadLine();
-
-//Console.WriteLine("Введите дату рождения");
-//var birthDate = DateTime.Parse(Console.ReadLine()); 
-
-//Console.WriteLine("Введите вес");
-//var weigth = double.Parse(Console.ReadLine()); 
-
-//Console.WriteLine("Введите свой рост");
-//var heigth = double.Parse(Console.ReadLine()); 
-
 var userController = new UserController(name);
+if (userController.IsNewUser)
+{
+    Console.WriteLine("Пол");
+    var gender = Console.ReadLine();
+    var birthDate = ParseValue<DateTime>("Дату рождения (dd.MM.yyyy)");
+    var weigth = ParseValue<double>("Вес");
+    var heigth = ParseValue<double>("Рост");
+
+    userController.SetNewUserData(gender, birthDate, weigth, heigth);
+}
 
 Console.WriteLine(userController.CurrentUser);
 Console.ReadLine();
+
+static T ParseValue<T>(string name) where T : IParsable<T>
+{
+    while (true)
+    {
+        Console.WriteLine($"Введите {name}");
+        var input = Console.ReadLine() ?? "";
+
+        if (T.TryParse(input, null, out var value))
+        {
+            return value;
+        }
+        else
+        {
+            Console.WriteLine($"Неверный формат {name}");
+        }
+    }
+}
+
