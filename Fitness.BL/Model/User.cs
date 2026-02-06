@@ -34,6 +34,17 @@ namespace Fitness.BL.Model
         /// Рост.
         /// </summary>
         public double Heigth { get; set; }
+
+        public int Age 
+        {            
+            get
+            {
+                var today = DateTime.Today;
+                var age = today.Year - BirthDate.Year;
+                if (BirthDate > today.AddYears(-age)) age--;
+                return age;
+            }
+        }
         #endregion
 
         /// <summary>
@@ -83,9 +94,19 @@ namespace Fitness.BL.Model
             Heigth = heigth;
         }
 
+        public User(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Имя пользователя не может быть пустым или null", nameof(name));
+            }
+
+            Name = name;
+        }
+
         public override string ToString()
         {
-            return Name;
+            return Name + " " + Age;
         }
     }
 }

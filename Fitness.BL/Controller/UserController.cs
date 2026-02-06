@@ -1,6 +1,5 @@
 ﻿using Fitness.BL.Model;
 using System;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
 
 namespace Fitness.BL.Controller
@@ -10,6 +9,10 @@ namespace Fitness.BL.Controller
     /// </summary>
     public class UserController
     {
+        public List<User> Users { get; }
+
+        public User CurrentUser { get; }
+
         /// <summary>
         /// Пользователь приложения.
         /// </summary>
@@ -19,23 +22,40 @@ namespace Fitness.BL.Controller
         /// Создание нового контроллера пользователя
         /// </summary>
         /// <param name="user"></param>
-        public UserController(string userName, string genderName, DateTime birthDate, double weight, double height)
+        public UserController(string userName)
         {
-            // TODO: проверка
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                throw new ArgumentNullException("Имя пользователя не может быть пустым или null", nameof(userName));
+            }
+            Users = GetUsersData();
 
-            var gender = new Gender(genderName);
-            User = new User(userName, gender, birthDate, weight, height);
+            CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
+
+            if (CurrentUser == null)
+            {
+                CurrentUser = new User(userName);
+                Users.Add(CurrentUser);
+                Save();
+            }
+
 
         }
 
-        public UserController()
+
+
+        /// <summary>
+        /// Получить сохраненный список пользователей.
+        /// </summary>
+        /// <returns></returns>
+        private List<User> GetUsersData()
         {
+            if (!File.Exists("users.json"))
+                return new List<User>();
+
             using var fs = new FileStream("users.json", FileMode.Open, FileAccess.Read);
 
-            if (JsonSerializer.Deserialize<User>(fs) is User user)
-                User = user;
-            else
-                throw new InvalidDataException("Не удалось загрузить пользователя");
+            return JsonSerializer.Deserialize<List<User>>(fs) ?? new List<User>();
 
         }
 
@@ -50,7 +70,7 @@ namespace Fitness.BL.Controller
             };
 
             using var fs = new FileStream("users.json", FileMode.Create, FileAccess.Write, FileShare.None);
-            JsonSerializer.Serialize(fs, User, options);
+            JsonSerializer.Serialize(fs, Users, options);
         }
     }
 }
