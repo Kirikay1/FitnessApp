@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Fitness.BL.Model
 {
@@ -16,6 +17,7 @@ namespace Fitness.BL.Model
         /// Создать новый пол.
         /// </summary>
         /// <param name="name">Имя пола.</param>
+        [JsonConstructor]
         public Gender(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

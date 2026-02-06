@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+
 
 namespace Fitness.BL.Model
 {
@@ -42,6 +44,7 @@ namespace Fitness.BL.Model
         /// <param name="birthDate"> Дата рождения. </param>
         /// <param name="weigth"> Вес. </param>
         /// <param name="heigth"> Рост. </param>
+        [JsonConstructor]
         public User(string name, Gender gender, DateTime birthDate, double weigth, double heigth)
         {
 
@@ -63,12 +66,12 @@ namespace Fitness.BL.Model
 
             if (weigth <= 0)
             {
-                throw new ArgumentException("Рост должен быть больше 0", nameof(weigth));
+                throw new ArgumentException("Вес должен быть больше 0", nameof(weigth));
             }
 
             if (heigth <= 0)
             {
-                throw new ArgumentException("Вес должен быть больше 0", nameof(heigth));
+                throw new ArgumentException("Рост должен быть больше 0", nameof(heigth));
 
             }
             #endregion
