@@ -55,7 +55,6 @@ namespace Fitness.BL.Model
         /// <param name="birthDate"> Дата рождения. </param>
         /// <param name="weigth"> Вес. </param>
         /// <param name="heigth"> Рост. </param>
-        [JsonConstructor]
         public User(string name, Gender gender, DateTime birthDate, double weigth, double heigth)
         {
 
@@ -93,7 +92,7 @@ namespace Fitness.BL.Model
             Weigth = weigth;
             Heigth = heigth;
         }
-
+        [JsonConstructor]
         public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

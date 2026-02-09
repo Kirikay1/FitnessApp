@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="Fitness.BL/Fitness.BL.csproj" />
+  <Project Path="Fitness.BLTests/Fitness.BLTests.csproj" Id="50fc9bfc-2269-49b2-8f47-a83e6b43ad5f" />
   <Project Path="Fitness.CMD/Fitness.CMD.csproj" />
 </Solution>
